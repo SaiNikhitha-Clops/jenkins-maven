@@ -1,19 +1,28 @@
 pipeline {
     
-    agent none
+    agent any
     
    stages {
         
-        stage('Build'){
-            
-            agent {
-                label "myslavemaven"
+        stage('Compile'){
+            steps{
+            bat 'mvn compile'
             }
-          
-          steps {
-             
-                echo "my master branch"
           }
+        stage('Test'){
+            steps{
+            bat 'mvntest'
+            }
+        }
+        stage('Build'){
+            steps{
+            bat 'mvn install'
+            }
+        }
+        stage('Deploy'){
+            steps{
+            bat 'mvn deploy'
+            }
         }
    }
 }
